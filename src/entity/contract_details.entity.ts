@@ -16,7 +16,7 @@ export class UserToContract{
 
 
 
-    @Column()
+   @Column("longtext")
     public content!: string;
 
     @ManyToOne(() => Users, user => user.userToContract)

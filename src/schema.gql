@@ -1,0 +1,86 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Pet {
+  id: Float!
+  name: String!
+  type: String
+  ownerId: Int!
+  owner: Owner!
+}
+
+type Owner {
+  id: Int!
+  name: String!
+  pets: [Pet!]
+  stores: [Store!]
+}
+
+type Store {
+  id: Int!
+  name: String!
+  address: String!
+  owners: [Owner!]
+}
+
+type Users {
+  id: Float!
+  name: String!
+  email: String!
+  password: String!
+  phone: String
+  address: String
+}
+
+type LoginResponse {
+  access_token: String!
+}
+
+type Query {
+  owners: [Owner!]!
+  owner(id: Int!): Owner!
+  author(id: Int!): Owner!
+  getPet(id: Int!): Pet!
+  pets: [Pet!]!
+  stores: [Store!]!
+  users: [Users!]!
+  user(id: Int!): Users!
+  findUserByName(name: String!): Users!
+}
+
+type Mutation {
+  createOwner(createOwnerInput: CreateOwnerInput!): Owner!
+  createPet(createPetInput: CreatePetInput!): Pet!
+  updatePet(updatePetInput: UpdatePetInput!, id: Int!): Pet!
+  deletePet(id: Int!): Float!
+  createUser(createInputUser: CreateInputUser!): Users!
+  login(loginUserInput: LoginUserInput!): LoginResponse!
+}
+
+input CreateOwnerInput {
+  name: String!
+}
+
+input CreatePetInput {
+  name: String!
+  type: String
+  ownerId: Int!
+}
+
+input UpdatePetInput {
+  name: String!
+  type: String
+  ownerId: Int!
+}
+
+input CreateInputUser {
+  name: String!
+  email: String!
+  password: String!
+}
+
+input LoginUserInput {
+  email: String!
+  password: String!
+}

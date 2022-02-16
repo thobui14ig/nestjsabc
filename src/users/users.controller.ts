@@ -1,13 +1,14 @@
 import { Contract } from './../entity/contract.entity';
 import { Attribute } from './../entity/attribute.entity';
 import { Users } from 'src/entity/user.entity';
-import { Connection, getConnection } from 'typeorm';
+import { Connection, createQueryBuilder, getConnection } from 'typeorm';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UsersService } from './users.service';
 import { Body, ConsoleLogger, Controller, Get, Param, Post, UseInterceptors } from '@nestjs/common';
 // import { ApiBearerAuth, ApiBody, ApiConsumes, ApiCreatedResponse, ApiOkResponse, ApiResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { UserDto } from './dto/user.dto';
 import {getRepository} from "typeorm";
+import { Value } from 'src/entity/value.entity';
 
 @Controller('user')
 export class UsersController {
@@ -38,20 +39,24 @@ export class UsersController {
     //GET BYID
     @Get('/userAndAttr/:id')
     async findUserAndAttr(@Param('id') id: number){
-        const user = await 
-        getRepository(Users).createQueryBuilder("users")
-        
-        
-        .leftJoinAndSelect("users.values", "value")
-        .where("users.id = :id", { id: id })
-        .getOne();
         const attr = await getRepository(Attribute).find(); 
-        console.log(attr)
 
+        const user = await getRepository(Users)
+        .createQueryBuilder("user")
+        .leftJoinAndSelect("user.values", "value")
+        .leftJoinAndSelect("value.attr", "atribute")
+        .where("user.id = :id", { id: id })
+        .getOne();
+      
+      
         return {
             "user": user,
             "attr" : attr
         } 
+
+        
+
+   
     }
 
     //GET BYID

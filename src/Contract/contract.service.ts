@@ -1,6 +1,7 @@
 import { Attribute } from './../entity/attribute.entity';
 import { EditContractDto } from './dto/EditContract.dto';
 import { Contract } from './../entity/contract.entity';
+import { Value } from './../entity/value.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
@@ -9,7 +10,8 @@ import { Repository } from 'typeorm';
 export class ContractService {
     constructor(
         @InjectRepository(Contract) private readonly contractRepository: Repository<Contract>,
-        @InjectRepository(Attribute) private readonly attrRepository: Repository<Attribute>
+        @InjectRepository(Attribute) private readonly attrRepository: Repository<Attribute>,
+        @InjectRepository(Value) private readonly valueRepository: Repository<Value>,
 
     ) {}
 
@@ -55,4 +57,11 @@ export class ContractService {
         return attribute;
 
     }
+
+    async abc(){
+        return this.valueRepository.find({ relations: ["attr"] });
+    }
+
+
+
 }
